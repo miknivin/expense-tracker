@@ -6,7 +6,7 @@ import { isAuthenticatedUser } from '@/lib/middleware/auth';
 
 export async function GET(
   request: NextRequest,
- context: { params: { id: string } }
+ { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await isAuthenticatedUser(request);
@@ -14,8 +14,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const params = await Promise.resolve(context.params);
-    const { id } = params;
+    const { id } = await params;
 
     // ← CRITICAL: Validate that id exists and is a string
     if (!id || typeof id !== 'string') {
@@ -59,7 +58,7 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
- context: { params: { id: string } }
+ { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // 1. Require authentication
@@ -68,8 +67,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const params = await Promise.resolve(context.params);
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
 
     const {
@@ -163,7 +161,7 @@ export async function PATCH(
 // NEW: DELETE handler
 export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await isAuthenticatedUser(request);
@@ -172,8 +170,7 @@ export async function DELETE(
     }
 
     
-    const params = await Promise.resolve(context.params);
-    const { id } = params;
+    const { id } = await params;
 
     // 2. Validate ID
     if (!id || typeof id !== 'string') {

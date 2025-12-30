@@ -4,22 +4,23 @@ import { NextResponse } from 'next/server';
 
 // Helper: Convert "YYYY-MM-DD" → "YYYY-MM-DD T00:00:00.000Z" (midnight UTC)
 const toDateTime = (dateStr: string | undefined): string | undefined => {
-  if (!dateStr) return undefined; // Don't touch the field if not provided
+  if (!dateStr) return undefined;
   return `${dateStr}T00:00:00.000Z`;
 };
 
 // PATCH → Update an existing event
 export async function PATCH(
   request: Request,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> } // ← params is now a Promise
 ) {
   try {
     const body = await request.json();
-
     const { title, start, end, allDay, calendar } = body;
 
-    const params = await Promise.resolve(context.params);
-    const { id } = params;
+    // Await the params since it's async in Next.js 15+
+    const { id } = await params;
+
+    // Validation
     if (
       (title !== undefined && !title?.trim()) ||
       (calendar !== undefined && !calendar)
@@ -31,7 +32,7 @@ export async function PATCH(
     }
 
     const updatedEvent = await prisma.event.update({
-      where: { id: id },
+      where: { id },
       data: {
         title: title?.trim(),
         start: start !== undefined ? toDateTime(start) : undefined,
@@ -56,13 +57,13 @@ export async function PATCH(
 // DELETE → Remove an event permanently
 export async function DELETE(
   request: Request,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> } // ← params is now a Promise
 ) {
   try {
-    const params = await Promise.resolve(context.params);
-    const { id } = params;
+    const { id } = await params; // ← Await here too
+
     await prisma.event.delete({
-      where: { id: id },
+      where: { id },
     });
 
     return NextResponse.json({ message: 'Event deleted successfully' });
@@ -72,6 +73,7 @@ export async function DELETE(
     if (error.code === 'P2025') {
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
+
     return NextResponse.json({ error: 'Failed to delete event' }, { status: 500 });
   }
 }
