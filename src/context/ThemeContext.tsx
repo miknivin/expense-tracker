@@ -15,31 +15,29 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  useEffect(() => {
-    // This code will only run on the client side
+  // Read from localStorage directly during initial state computation
+  // This only happens once on mount (client-side)
+  const getInitialTheme = (): Theme => {
+    if (typeof window === "undefined") return "light"; // SSR safety (though not needed in "use client")
     const savedTheme = localStorage.getItem("theme") as Theme | null;
-    const initialTheme = savedTheme || "light"; // Default to light theme
+    return savedTheme || "light";
+  };
 
-    setTheme(initialTheme);
-    setIsInitialized(true);
-  }, []);
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
+  // Sync theme to localStorage and apply dark class whenever theme changes
   useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem("theme", theme);
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+    localStorage.setItem("theme", theme);
+
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
-  }, [theme, isInitialized]);
+  }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (

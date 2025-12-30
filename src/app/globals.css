@@ -282,15 +282,22 @@
 
 
 @layer utilities {
-  /* For Remove Date Icon */
-  input[type="date"]::-webkit-inner-spin-button,
-  input[type="time"]::-webkit-inner-spin-button,
-  input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="time"]::-webkit-calendar-picker-indicator {
+  input[type="date"]:not(.native-picker)::-webkit-inner-spin-button,
+  input[type="time"]:not(.native-picker)::-webkit-inner-spin-button,
+  input[type="date"]:not(.native-picker)::-webkit-calendar-picker-indicator,
+  input[type="time"]:not(.native-picker)::-webkit-calendar-picker-indicator {
     display: none;
     -webkit-appearance: none;
   }
 }
+
+@layer utilities {
+  .dark input[type="date"]::-webkit-calendar-picker-indicator,
+  .dark input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
 
 /* third-party libraries CSS */
 .apexcharts-legend-text {

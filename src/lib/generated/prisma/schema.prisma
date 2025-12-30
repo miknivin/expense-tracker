@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url and directUrl removed!
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  name          String?
+  password      String
+  createdAt     DateTime       @default(now())
+  role          Role           @default(VIEWER)
+  updatedAt     DateTime       @updatedAt
+  monthlyLimits MonthlyLimit[]
+  expenses      Expense[]
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+  VIEWER
+}
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String  @unique // e.g., "MATERIALS"
+  description String? // NEW: Optional description for the category
+
+  expenses Expense[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model Expense {
+  id          String   @id @default(uuid())
+  date        DateTime // Date of the expense
+  description String // e.g., "10 bags cement", "Lunch for workers"
+  amount      Decimal // Amount in Rupees (e.g., 1250.50)
+  billPhoto   String? // Optional URL to uploaded bill/receipt photo
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("expenses")
+}
+
+model MonthlyLimit {
+  id     String  @id @default(uuid())
+  userId String
+  month  Int // 1 = Jan, 12 = Dec
+  year   Int // 2024, 2025, etc.
+  amount Decimal @db.Decimal(12, 2)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, month, year])
+  @@map("monthly_limits")
+}
+
+model Event {
+  id       String    @id @default(uuid())
+  title    String
+  start    DateTime // ISO string or Date, e.g., "2025-12-30"
+  end      DateTime? // Optional for single-day events
+  allDay   Boolean   @default(true)
+  calendar String // "Danger" | "Success" | "Primary" | "Warning"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("events")
+}
