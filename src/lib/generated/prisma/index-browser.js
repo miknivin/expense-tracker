@@ -171,6 +171,11 @@ exports.Prisma.EventScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.HeartbeatScalarFieldEnum = {
+  id: 'id',
+  pingedAt: 'pingedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -196,7 +201,8 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Expense: 'Expense',
   MonthlyLimit: 'MonthlyLimit',
-  Event: 'Event'
+  Event: 'Event',
+  Heartbeat: 'Heartbeat'
 };
 
 /**

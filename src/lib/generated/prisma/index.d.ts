@@ -38,6 +38,11 @@ export type MonthlyLimit = $Result.DefaultSelection<Prisma.$MonthlyLimitPayload>
  * 
  */
 export type Event = $Result.DefaultSelection<Prisma.$EventPayload>
+/**
+ * Model Heartbeat
+ * 
+ */
+export type Heartbeat = $Result.DefaultSelection<Prisma.$HeartbeatPayload>
 
 /**
  * Enums
@@ -223,6 +228,16 @@ export class PrismaClient<
     * ```
     */
   get event(): Prisma.EventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.heartbeat`: Exposes CRUD operations for the **Heartbeat** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Heartbeats
+    * const heartbeats = await prisma.heartbeat.findMany()
+    * ```
+    */
+  get heartbeat(): Prisma.HeartbeatDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -661,7 +676,8 @@ export namespace Prisma {
     Category: 'Category',
     Expense: 'Expense',
     MonthlyLimit: 'MonthlyLimit',
-    Event: 'Event'
+    Event: 'Event',
+    Heartbeat: 'Heartbeat'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -677,7 +693,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "expense" | "monthlyLimit" | "event"
+      modelProps: "user" | "category" | "expense" | "monthlyLimit" | "event" | "heartbeat"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1051,6 +1067,80 @@ export namespace Prisma {
           }
         }
       }
+      Heartbeat: {
+        payload: Prisma.$HeartbeatPayload<ExtArgs>
+        fields: Prisma.HeartbeatFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HeartbeatFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HeartbeatFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>
+          }
+          findFirst: {
+            args: Prisma.HeartbeatFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HeartbeatFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>
+          }
+          findMany: {
+            args: Prisma.HeartbeatFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>[]
+          }
+          create: {
+            args: Prisma.HeartbeatCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>
+          }
+          createMany: {
+            args: Prisma.HeartbeatCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HeartbeatCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>[]
+          }
+          delete: {
+            args: Prisma.HeartbeatDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>
+          }
+          update: {
+            args: Prisma.HeartbeatUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>
+          }
+          deleteMany: {
+            args: Prisma.HeartbeatDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HeartbeatUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HeartbeatUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>[]
+          }
+          upsert: {
+            args: Prisma.HeartbeatUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HeartbeatPayload>
+          }
+          aggregate: {
+            args: Prisma.HeartbeatAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHeartbeat>
+          }
+          groupBy: {
+            args: Prisma.HeartbeatGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HeartbeatGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HeartbeatCountArgs<ExtArgs>
+            result: $Utils.Optional<HeartbeatCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1164,6 +1254,7 @@ export namespace Prisma {
     expense?: ExpenseOmit
     monthlyLimit?: MonthlyLimitOmit
     event?: EventOmit
+    heartbeat?: HeartbeatOmit
   }
 
   /* Types for Logging */
@@ -6821,6 +6912,996 @@ export namespace Prisma {
 
 
   /**
+   * Model Heartbeat
+   */
+
+  export type AggregateHeartbeat = {
+    _count: HeartbeatCountAggregateOutputType | null
+    _avg: HeartbeatAvgAggregateOutputType | null
+    _sum: HeartbeatSumAggregateOutputType | null
+    _min: HeartbeatMinAggregateOutputType | null
+    _max: HeartbeatMaxAggregateOutputType | null
+  }
+
+  export type HeartbeatAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type HeartbeatSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type HeartbeatMinAggregateOutputType = {
+    id: number | null
+    pingedAt: Date | null
+  }
+
+  export type HeartbeatMaxAggregateOutputType = {
+    id: number | null
+    pingedAt: Date | null
+  }
+
+  export type HeartbeatCountAggregateOutputType = {
+    id: number
+    pingedAt: number
+    _all: number
+  }
+
+
+  export type HeartbeatAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type HeartbeatSumAggregateInputType = {
+    id?: true
+  }
+
+  export type HeartbeatMinAggregateInputType = {
+    id?: true
+    pingedAt?: true
+  }
+
+  export type HeartbeatMaxAggregateInputType = {
+    id?: true
+    pingedAt?: true
+  }
+
+  export type HeartbeatCountAggregateInputType = {
+    id?: true
+    pingedAt?: true
+    _all?: true
+  }
+
+  export type HeartbeatAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Heartbeat to aggregate.
+     */
+    where?: HeartbeatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Heartbeats to fetch.
+     */
+    orderBy?: HeartbeatOrderByWithRelationInput | HeartbeatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HeartbeatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Heartbeats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Heartbeats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Heartbeats
+    **/
+    _count?: true | HeartbeatCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HeartbeatAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HeartbeatSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HeartbeatMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HeartbeatMaxAggregateInputType
+  }
+
+  export type GetHeartbeatAggregateType<T extends HeartbeatAggregateArgs> = {
+        [P in keyof T & keyof AggregateHeartbeat]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHeartbeat[P]>
+      : GetScalarType<T[P], AggregateHeartbeat[P]>
+  }
+
+
+
+
+  export type HeartbeatGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HeartbeatWhereInput
+    orderBy?: HeartbeatOrderByWithAggregationInput | HeartbeatOrderByWithAggregationInput[]
+    by: HeartbeatScalarFieldEnum[] | HeartbeatScalarFieldEnum
+    having?: HeartbeatScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HeartbeatCountAggregateInputType | true
+    _avg?: HeartbeatAvgAggregateInputType
+    _sum?: HeartbeatSumAggregateInputType
+    _min?: HeartbeatMinAggregateInputType
+    _max?: HeartbeatMaxAggregateInputType
+  }
+
+  export type HeartbeatGroupByOutputType = {
+    id: number
+    pingedAt: Date
+    _count: HeartbeatCountAggregateOutputType | null
+    _avg: HeartbeatAvgAggregateOutputType | null
+    _sum: HeartbeatSumAggregateOutputType | null
+    _min: HeartbeatMinAggregateOutputType | null
+    _max: HeartbeatMaxAggregateOutputType | null
+  }
+
+  type GetHeartbeatGroupByPayload<T extends HeartbeatGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HeartbeatGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HeartbeatGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HeartbeatGroupByOutputType[P]>
+            : GetScalarType<T[P], HeartbeatGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HeartbeatSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    pingedAt?: boolean
+  }, ExtArgs["result"]["heartbeat"]>
+
+  export type HeartbeatSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    pingedAt?: boolean
+  }, ExtArgs["result"]["heartbeat"]>
+
+  export type HeartbeatSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    pingedAt?: boolean
+  }, ExtArgs["result"]["heartbeat"]>
+
+  export type HeartbeatSelectScalar = {
+    id?: boolean
+    pingedAt?: boolean
+  }
+
+  export type HeartbeatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pingedAt", ExtArgs["result"]["heartbeat"]>
+
+  export type $HeartbeatPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Heartbeat"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      pingedAt: Date
+    }, ExtArgs["result"]["heartbeat"]>
+    composites: {}
+  }
+
+  type HeartbeatGetPayload<S extends boolean | null | undefined | HeartbeatDefaultArgs> = $Result.GetResult<Prisma.$HeartbeatPayload, S>
+
+  type HeartbeatCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HeartbeatFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HeartbeatCountAggregateInputType | true
+    }
+
+  export interface HeartbeatDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Heartbeat'], meta: { name: 'Heartbeat' } }
+    /**
+     * Find zero or one Heartbeat that matches the filter.
+     * @param {HeartbeatFindUniqueArgs} args - Arguments to find a Heartbeat
+     * @example
+     * // Get one Heartbeat
+     * const heartbeat = await prisma.heartbeat.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HeartbeatFindUniqueArgs>(args: SelectSubset<T, HeartbeatFindUniqueArgs<ExtArgs>>): Prisma__HeartbeatClient<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Heartbeat that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HeartbeatFindUniqueOrThrowArgs} args - Arguments to find a Heartbeat
+     * @example
+     * // Get one Heartbeat
+     * const heartbeat = await prisma.heartbeat.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HeartbeatFindUniqueOrThrowArgs>(args: SelectSubset<T, HeartbeatFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HeartbeatClient<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Heartbeat that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HeartbeatFindFirstArgs} args - Arguments to find a Heartbeat
+     * @example
+     * // Get one Heartbeat
+     * const heartbeat = await prisma.heartbeat.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HeartbeatFindFirstArgs>(args?: SelectSubset<T, HeartbeatFindFirstArgs<ExtArgs>>): Prisma__HeartbeatClient<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Heartbeat that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HeartbeatFindFirstOrThrowArgs} args - Arguments to find a Heartbeat
+     * @example
+     * // Get one Heartbeat
+     * const heartbeat = await prisma.heartbeat.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HeartbeatFindFirstOrThrowArgs>(args?: SelectSubset<T, HeartbeatFindFirstOrThrowArgs<ExtArgs>>): Prisma__HeartbeatClient<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Heartbeats that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HeartbeatFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Heartbeats
+     * const heartbeats = await prisma.heartbeat.findMany()
+     * 
+     * // Get first 10 Heartbeats
+     * const heartbeats = await prisma.heartbeat.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const heartbeatWithIdOnly = await prisma.heartbeat.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HeartbeatFindManyArgs>(args?: SelectSubset<T, HeartbeatFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Heartbeat.
+     * @param {HeartbeatCreateArgs} args - Arguments to create a Heartbeat.
+     * @example
+     * // Create one Heartbeat
+     * const Heartbeat = await prisma.heartbeat.create({
+     *   data: {
+     *     // ... data to create a Heartbeat
+     *   }
+     * })
+     * 
+     */
+    create<T extends HeartbeatCreateArgs>(args: SelectSubset<T, HeartbeatCreateArgs<ExtArgs>>): Prisma__HeartbeatClient<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Heartbeats.
+     * @param {HeartbeatCreateManyArgs} args - Arguments to create many Heartbeats.
+     * @example
+     * // Create many Heartbeats
+     * const heartbeat = await prisma.heartbeat.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HeartbeatCreateManyArgs>(args?: SelectSubset<T, HeartbeatCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Heartbeats and returns the data saved in the database.
+     * @param {HeartbeatCreateManyAndReturnArgs} args - Arguments to create many Heartbeats.
+     * @example
+     * // Create many Heartbeats
+     * const heartbeat = await prisma.heartbeat.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Heartbeats and only return the `id`
+     * const heartbeatWithIdOnly = await prisma.heartbeat.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HeartbeatCreateManyAndReturnArgs>(args?: SelectSubset<T, HeartbeatCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Heartbeat.
+     * @param {HeartbeatDeleteArgs} args - Arguments to delete one Heartbeat.
+     * @example
+     * // Delete one Heartbeat
+     * const Heartbeat = await prisma.heartbeat.delete({
+     *   where: {
+     *     // ... filter to delete one Heartbeat
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HeartbeatDeleteArgs>(args: SelectSubset<T, HeartbeatDeleteArgs<ExtArgs>>): Prisma__HeartbeatClient<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Heartbeat.
+     * @param {HeartbeatUpdateArgs} args - Arguments to update one Heartbeat.
+     * @example
+     * // Update one Heartbeat
+     * const heartbeat = await prisma.heartbeat.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HeartbeatUpdateArgs>(args: SelectSubset<T, HeartbeatUpdateArgs<ExtArgs>>): Prisma__HeartbeatClient<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Heartbeats.
+     * @param {HeartbeatDeleteManyArgs} args - Arguments to filter Heartbeats to delete.
+     * @example
+     * // Delete a few Heartbeats
+     * const { count } = await prisma.heartbeat.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HeartbeatDeleteManyArgs>(args?: SelectSubset<T, HeartbeatDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Heartbeats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HeartbeatUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Heartbeats
+     * const heartbeat = await prisma.heartbeat.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HeartbeatUpdateManyArgs>(args: SelectSubset<T, HeartbeatUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Heartbeats and returns the data updated in the database.
+     * @param {HeartbeatUpdateManyAndReturnArgs} args - Arguments to update many Heartbeats.
+     * @example
+     * // Update many Heartbeats
+     * const heartbeat = await prisma.heartbeat.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Heartbeats and only return the `id`
+     * const heartbeatWithIdOnly = await prisma.heartbeat.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HeartbeatUpdateManyAndReturnArgs>(args: SelectSubset<T, HeartbeatUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Heartbeat.
+     * @param {HeartbeatUpsertArgs} args - Arguments to update or create a Heartbeat.
+     * @example
+     * // Update or create a Heartbeat
+     * const heartbeat = await prisma.heartbeat.upsert({
+     *   create: {
+     *     // ... data to create a Heartbeat
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Heartbeat we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HeartbeatUpsertArgs>(args: SelectSubset<T, HeartbeatUpsertArgs<ExtArgs>>): Prisma__HeartbeatClient<$Result.GetResult<Prisma.$HeartbeatPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Heartbeats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HeartbeatCountArgs} args - Arguments to filter Heartbeats to count.
+     * @example
+     * // Count the number of Heartbeats
+     * const count = await prisma.heartbeat.count({
+     *   where: {
+     *     // ... the filter for the Heartbeats we want to count
+     *   }
+     * })
+    **/
+    count<T extends HeartbeatCountArgs>(
+      args?: Subset<T, HeartbeatCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HeartbeatCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Heartbeat.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HeartbeatAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HeartbeatAggregateArgs>(args: Subset<T, HeartbeatAggregateArgs>): Prisma.PrismaPromise<GetHeartbeatAggregateType<T>>
+
+    /**
+     * Group by Heartbeat.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HeartbeatGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HeartbeatGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HeartbeatGroupByArgs['orderBy'] }
+        : { orderBy?: HeartbeatGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HeartbeatGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHeartbeatGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Heartbeat model
+   */
+  readonly fields: HeartbeatFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Heartbeat.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HeartbeatClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Heartbeat model
+   */
+  interface HeartbeatFieldRefs {
+    readonly id: FieldRef<"Heartbeat", 'Int'>
+    readonly pingedAt: FieldRef<"Heartbeat", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Heartbeat findUnique
+   */
+  export type HeartbeatFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * Filter, which Heartbeat to fetch.
+     */
+    where: HeartbeatWhereUniqueInput
+  }
+
+  /**
+   * Heartbeat findUniqueOrThrow
+   */
+  export type HeartbeatFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * Filter, which Heartbeat to fetch.
+     */
+    where: HeartbeatWhereUniqueInput
+  }
+
+  /**
+   * Heartbeat findFirst
+   */
+  export type HeartbeatFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * Filter, which Heartbeat to fetch.
+     */
+    where?: HeartbeatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Heartbeats to fetch.
+     */
+    orderBy?: HeartbeatOrderByWithRelationInput | HeartbeatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Heartbeats.
+     */
+    cursor?: HeartbeatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Heartbeats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Heartbeats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Heartbeats.
+     */
+    distinct?: HeartbeatScalarFieldEnum | HeartbeatScalarFieldEnum[]
+  }
+
+  /**
+   * Heartbeat findFirstOrThrow
+   */
+  export type HeartbeatFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * Filter, which Heartbeat to fetch.
+     */
+    where?: HeartbeatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Heartbeats to fetch.
+     */
+    orderBy?: HeartbeatOrderByWithRelationInput | HeartbeatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Heartbeats.
+     */
+    cursor?: HeartbeatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Heartbeats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Heartbeats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Heartbeats.
+     */
+    distinct?: HeartbeatScalarFieldEnum | HeartbeatScalarFieldEnum[]
+  }
+
+  /**
+   * Heartbeat findMany
+   */
+  export type HeartbeatFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * Filter, which Heartbeats to fetch.
+     */
+    where?: HeartbeatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Heartbeats to fetch.
+     */
+    orderBy?: HeartbeatOrderByWithRelationInput | HeartbeatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Heartbeats.
+     */
+    cursor?: HeartbeatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Heartbeats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Heartbeats.
+     */
+    skip?: number
+    distinct?: HeartbeatScalarFieldEnum | HeartbeatScalarFieldEnum[]
+  }
+
+  /**
+   * Heartbeat create
+   */
+  export type HeartbeatCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Heartbeat.
+     */
+    data?: XOR<HeartbeatCreateInput, HeartbeatUncheckedCreateInput>
+  }
+
+  /**
+   * Heartbeat createMany
+   */
+  export type HeartbeatCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Heartbeats.
+     */
+    data: HeartbeatCreateManyInput | HeartbeatCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Heartbeat createManyAndReturn
+   */
+  export type HeartbeatCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * The data used to create many Heartbeats.
+     */
+    data: HeartbeatCreateManyInput | HeartbeatCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Heartbeat update
+   */
+  export type HeartbeatUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Heartbeat.
+     */
+    data: XOR<HeartbeatUpdateInput, HeartbeatUncheckedUpdateInput>
+    /**
+     * Choose, which Heartbeat to update.
+     */
+    where: HeartbeatWhereUniqueInput
+  }
+
+  /**
+   * Heartbeat updateMany
+   */
+  export type HeartbeatUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Heartbeats.
+     */
+    data: XOR<HeartbeatUpdateManyMutationInput, HeartbeatUncheckedUpdateManyInput>
+    /**
+     * Filter which Heartbeats to update
+     */
+    where?: HeartbeatWhereInput
+    /**
+     * Limit how many Heartbeats to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Heartbeat updateManyAndReturn
+   */
+  export type HeartbeatUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * The data used to update Heartbeats.
+     */
+    data: XOR<HeartbeatUpdateManyMutationInput, HeartbeatUncheckedUpdateManyInput>
+    /**
+     * Filter which Heartbeats to update
+     */
+    where?: HeartbeatWhereInput
+    /**
+     * Limit how many Heartbeats to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Heartbeat upsert
+   */
+  export type HeartbeatUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Heartbeat to update in case it exists.
+     */
+    where: HeartbeatWhereUniqueInput
+    /**
+     * In case the Heartbeat found by the `where` argument doesn't exist, create a new Heartbeat with this data.
+     */
+    create: XOR<HeartbeatCreateInput, HeartbeatUncheckedCreateInput>
+    /**
+     * In case the Heartbeat was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HeartbeatUpdateInput, HeartbeatUncheckedUpdateInput>
+  }
+
+  /**
+   * Heartbeat delete
+   */
+  export type HeartbeatDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+    /**
+     * Filter which Heartbeat to delete.
+     */
+    where: HeartbeatWhereUniqueInput
+  }
+
+  /**
+   * Heartbeat deleteMany
+   */
+  export type HeartbeatDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Heartbeats to delete
+     */
+    where?: HeartbeatWhereInput
+    /**
+     * Limit how many Heartbeats to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Heartbeat without action
+   */
+  export type HeartbeatDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Heartbeat
+     */
+    select?: HeartbeatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Heartbeat
+     */
+    omit?: HeartbeatOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6898,6 +7979,14 @@ export namespace Prisma {
   };
 
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+  export const HeartbeatScalarFieldEnum: {
+    id: 'id',
+    pingedAt: 'pingedAt'
+  };
+
+  export type HeartbeatScalarFieldEnum = (typeof HeartbeatScalarFieldEnum)[keyof typeof HeartbeatScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -7361,6 +8450,45 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
   }
 
+  export type HeartbeatWhereInput = {
+    AND?: HeartbeatWhereInput | HeartbeatWhereInput[]
+    OR?: HeartbeatWhereInput[]
+    NOT?: HeartbeatWhereInput | HeartbeatWhereInput[]
+    id?: IntFilter<"Heartbeat"> | number
+    pingedAt?: DateTimeFilter<"Heartbeat"> | Date | string
+  }
+
+  export type HeartbeatOrderByWithRelationInput = {
+    id?: SortOrder
+    pingedAt?: SortOrder
+  }
+
+  export type HeartbeatWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: HeartbeatWhereInput | HeartbeatWhereInput[]
+    OR?: HeartbeatWhereInput[]
+    NOT?: HeartbeatWhereInput | HeartbeatWhereInput[]
+    pingedAt?: DateTimeFilter<"Heartbeat"> | Date | string
+  }, "id">
+
+  export type HeartbeatOrderByWithAggregationInput = {
+    id?: SortOrder
+    pingedAt?: SortOrder
+    _count?: HeartbeatCountOrderByAggregateInput
+    _avg?: HeartbeatAvgOrderByAggregateInput
+    _max?: HeartbeatMaxOrderByAggregateInput
+    _min?: HeartbeatMinOrderByAggregateInput
+    _sum?: HeartbeatSumOrderByAggregateInput
+  }
+
+  export type HeartbeatScalarWhereWithAggregatesInput = {
+    AND?: HeartbeatScalarWhereWithAggregatesInput | HeartbeatScalarWhereWithAggregatesInput[]
+    OR?: HeartbeatScalarWhereWithAggregatesInput[]
+    NOT?: HeartbeatScalarWhereWithAggregatesInput | HeartbeatScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Heartbeat"> | number
+    pingedAt?: DateTimeWithAggregatesFilter<"Heartbeat"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -7725,6 +8853,38 @@ export namespace Prisma {
     calendar?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HeartbeatCreateInput = {
+    pingedAt?: Date | string
+  }
+
+  export type HeartbeatUncheckedCreateInput = {
+    id?: number
+    pingedAt?: Date | string
+  }
+
+  export type HeartbeatUpdateInput = {
+    pingedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HeartbeatUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pingedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HeartbeatCreateManyInput = {
+    id?: number
+    pingedAt?: Date | string
+  }
+
+  export type HeartbeatUpdateManyMutationInput = {
+    pingedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HeartbeatUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pingedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -8139,6 +9299,29 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type HeartbeatCountOrderByAggregateInput = {
+    id?: SortOrder
+    pingedAt?: SortOrder
+  }
+
+  export type HeartbeatAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type HeartbeatMaxOrderByAggregateInput = {
+    id?: SortOrder
+    pingedAt?: SortOrder
+  }
+
+  export type HeartbeatMinOrderByAggregateInput = {
+    id?: SortOrder
+    pingedAt?: SortOrder
+  }
+
+  export type HeartbeatSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type MonthlyLimitCreateNestedManyWithoutUserInput = {

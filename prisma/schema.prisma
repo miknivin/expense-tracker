@@ -90,3 +90,10 @@ model Event {
 
   @@map("events")
 }
+
+model Heartbeat {
+  id        Int      @id @default(autoincrement())
+  pingedAt  DateTime @default(now()) @updatedAt @map("pinged_at")
+
+  @@map("heartbeat")
+}
